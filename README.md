@@ -48,14 +48,14 @@ You can find demonstration videos of both scenarios embedded below:
 - Democratic victory scenario (lights changing to blue):
 
 <video width="640" height="360" controls>
-  <source src="assets/test-dem.mp4" type="video/mp4">
+  <source src="https://github.com/crodar/smart-election-2024/raw/refs/heads/master/assets/test-dem.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
 - Republican victory scenario (lights changing to red):
 
 <video width="640" height="360" controls>
-  <source src="assets/test-rep.mp4" type="video/mp4">
+  <source src="https://github.com/crodar/smart-election-2024/raw/refs/heads/master/assets/test-dem.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
