@@ -1,0 +1,142 @@
+.aider*
+.env
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Local development settings
+.env
+.env.local
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite3
+"""
+Electoral vote scraper for 270towin.com
+"""
+
+__version__ = "0.1.0"
+"""
+Scraper module for extracting electoral vote counts from 270towin.com
+"""
+
+import requests
+from bs4 import BeautifulSoup
+from typing import Tuple
+
+
+def get_electoral_votes() -> Tuple[int, int]:
+    """
+    Scrapes 270towin.com for current electoral vote projections.
+    
+    Returns:
+        Tuple[int, int]: A tuple of (republican_votes, democratic_votes)
+    
+    Raises:
+        RequestException: If the website cannot be reached
+        ValueError: If the vote counts cannot be parsed
+    """
+    url = "https://www.270towin.com/"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
+    
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Find the element containing the vote counts
+    vote_element = soup.find('div', {'class': 'electoral-totals'})
+    
+    if not vote_element:
+        raise ValueError("Could not find electoral vote totals on the page")
+        
+    # Extract and parse the numbers
+    try:
+        rep_votes = int(vote_element.find('span', {'class': 'rep-votes'}).text)
+        dem_votes = int(vote_element.find('span', {'class': 'dem-votes'}).text)
+        return rep_votes, dem_votes
+    except (AttributeError, ValueError) as e:
+        raise ValueError(f"Failed to parse vote counts: {str(e)}")
+"""
+Tests for the electoral vote scraper
+"""
+
+import pytest
+from electoral_scraper.scraper import get_electoral_votes
+
+
+def test_get_electoral_votes():
+    """Test that we can fetch and parse electoral votes"""
+    rep_votes, dem_votes = get_electoral_votes()
+    
+    # Basic validation of returned values
+    assert isinstance(rep_votes, int)
+    assert isinstance(dem_votes, int)
+    assert 0 <= rep_votes <= 538
+    assert 0 <= dem_votes <= 538
+    assert rep_votes + dem_votes <= 538  # Total electoral votes cannot exceed 538
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "electoral-scraper"
+version = "0.1.0"
+authors = [
+  { name="Your Name", email="your.email@example.com" },
+]
+description = "A scraper for 270towin.com electoral vote counts"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
