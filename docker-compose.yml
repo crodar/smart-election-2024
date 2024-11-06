@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  smart-election:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Uncomment the following lines if you need to override the default behavior
+    # command: python smart-election-2024.py  # Run without test-dem
+    # command: python smart-election-2024.py --test-rep  # Run test-rep instead
