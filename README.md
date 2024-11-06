@@ -2,6 +2,19 @@
 
 This Python script scrapes electoral vote predictions from 270towin.com and controls Sengled smart lights to display red for a Republican victory or blue for a Democratic victory when either candidate reaches 270 electoral votes.
 
+
+## Demo Videos
+
+- Democratic victory scenario (lights changing to blue):
+
+![test-dem](https://github.com/user-attachments/assets/b7dc43b4-9465-49d9-9832-1e2d5711cc7a)
+
+
+- Republican victory scenario (lights changing to red):
+
+![test-rep](https://github.com/user-attachments/assets/e1983dac-3994-4c23-b22c-a52656d039c0)
+
+
 ## Requirements
 
 - Python 3.x
@@ -16,10 +29,9 @@ This Python script scrapes electoral vote predictions from 270towin.com and cont
 pip install -r requirements.txt
 ```
 
-3. Create a `.env` file with your Sengled credentials:
-```
-SENGLED_USERNAME=your_username
-SENGLED_PASSWORD=your_password
+3. Rename `.env.template` to `.env` and enter your Sengled credentials:
+```bash
+mv .env.template .env
 ```
 
 ## Usage
@@ -41,18 +53,6 @@ python smart-election-2024.py --test-dem
 python smart-election-2024.py --test-rep
 ```
 
-### Demo Videos
-
-You can find demonstration videos of both scenarios embedded below:
-
-- Democratic victory scenario (lights changing to blue):
-
-![test-dem](https://github.com/user-attachments/assets/b7dc43b4-9465-49d9-9832-1e2d5711cc7a)
-
-
-- Republican victory scenario (lights changing to red):
-
-![test-rep](https://github.com/user-attachments/assets/e1983dac-3994-4c23-b22c-a52656d039c0)
 
 
 ## Features
