@@ -41,7 +41,7 @@ def get_electoral_votes() -> Tuple[int, int]:
     Returns:
         Tuple[int, int]: A tuple containing (republican_votes, democrat_votes)
     """
-    url = "https://www.270towin.com/"
+    url = "https://www.270towin.com/2024-election-results-live/president/"
     try:
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
@@ -52,8 +52,8 @@ def get_electoral_votes() -> Tuple[int, int]:
         driver.get(url)
 
         wait = WebDriverWait(driver, 10)
-        dem_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "tr.party-row:nth-child(3) > td:nth-child(2)")))
-        rep_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "tr.party-row:nth-child(4) > td:nth-child(2)")))
+        dem_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#dd_ev")))
+        rep_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#rr_ev")))
 
         democrat_votes = int(dem_element.text.strip())
         republican_votes = int(rep_element.text.strip())
